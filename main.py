@@ -15,9 +15,25 @@ class conta:
     def Salvar(self):
         criar_contadb(self.cpf, self.nome, self.idade, self.saldo)
 
-    def Depositar(self):
-        depositardb(self.cpf ,self.saldo)
-        
+    def Depositar(self, valor):
+        linhas = depositardb(self.cpf, valor)
+        if linhas == 0:
+            return False
+        self.saldo += valor
+        return True
+
+    def Sacar(self, valor):
+        if valor > self.saldo:
+            return False
+
+        linhas = sacardb(self.cpf, valor)
+        if linhas == 0:
+            return False
+
+        self.saldo -= valor
+        return True
+
+
 def ler_valor_positivo(mensagem):
     while True:
         try:
@@ -31,6 +47,7 @@ def ler_valor_positivo(mensagem):
             continue
 
         return valor
+
 
 def criar_conta():
     cpf = input("CPF: ")
@@ -75,24 +92,24 @@ def depositar():
 
 
 def sacar():
-    cpf = input("Digite seu CPF para sacar: ")
+    cpf = input("Digite seu CPF: ")
 
-    conta = consultar_saldodb(cpf)
-    if conta is None:
+    # Procurar conta
+    dados = BuscarContadb(cpf)
+    if dados is None:
         print("Conta não encontrada.")
         return
 
+    MinhaConta = conta(nome=dados[0], idade=dados[1], cpf=dados[2], saldo=dados[3])
+
+    # Parte do saque
     valor = ler_valor_positivo("Quanto deseja sacar? R$ ")
-    if valor > conta[1]:
-        print("Saldo insuficiente.")
+
+    if not MinhaConta.Sacar(valor):
+        print("Não foi possivel concluir o saque.")
         return
 
-    linhas_atualizadas = sacardb(cpf, valor)
-    if linhas_atualizadas == 0:
-        print("Não foi possível concluir o saque. Verifique o saldo e tente novamente.")
-        return
-
-    print(f"R$ {valor:.2f} sacados com sucesso para {conta[0]}.")
+    print(f"R$ {valor:.2f} sacados com sucesso para {MinhaConta.nome}.")
 
 
 def consultar_saldo():
@@ -151,5 +168,5 @@ def main():
             print("Opção inválida.")
 
 
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()
