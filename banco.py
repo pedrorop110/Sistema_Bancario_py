@@ -66,6 +66,14 @@ def criar_conta(cpf, nome, idade, saldo):
         raise
 
 
+def buscar_conta(cpf):
+    cursor.execute(
+        "SELECT nome, idade, cpf, saldo FROM sistema_bancario WHERE cpf = ?",
+        (cpf,),
+    )
+    return cursor.fetchone()
+
+
 def depositar(cpf, valor):
     if valor <= 0:
         return 0
