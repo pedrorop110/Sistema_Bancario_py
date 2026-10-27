@@ -33,6 +33,9 @@ class conta:
         self.saldo -= valor
         return True
 
+    def MostrarSaldo(self):
+        print(f"{self.nome} possui um saldo de R$ {self.saldo:.2f}")
+
 
 def ler_valor_positivo(mensagem):
     while True:
@@ -94,7 +97,7 @@ def depositar():
 def sacar():
     cpf = input("Digite seu CPF: ")
 
-    # Procurar conta
+    # Procurar Conta
     dados = BuscarContadb(cpf)
     if dados is None:
         print("Conta não encontrada.")
@@ -114,30 +117,36 @@ def sacar():
 
 def consultar_saldo():
     cpf = input("Digite o CPF: ")
-    info = consultar_saldodb(cpf)
 
-    if info is None:
+    # Procurar Conta
+    dados = BuscarContadb(cpf)
+    if dados is None:
         print("Conta não encontrada.")
-    else:
-        print(f"{info[0]} possui um saldo de R$ {info[1]:.2f}.")
+        return
+
+    MinhaConta = conta(nome=dados[0], idade=dados[1], cpf=dados[2], saldo=dados[3])
+    MinhaConta.MostrarSaldo()
 
 
 def ver_historico():
     cpf = input("Digite o CPF para ver o histórico: ")
 
-    conta = consultar_saldodb(cpf)
-    if conta is None:
+    # Procurar Conta
+    dados = BuscarContadb(cpf)
+    if dados is None:
         print("Conta não encontrada.")
         return
 
+    nome = dados[0]
+    
     historico = consultar_historicodb(cpf)
     if not historico:
-        print(f"Ainda não há movimentações para {conta[0]}.")
+        print(f"Ainda não há movimentações para {nome}.")
         return
 
-    print(f"\nHistórico de {conta[0]}:")
+    print(f"\nHistórico de {nome}:")
     for operacao, valor, data_hora in historico:
-        print(f"{data_hora} — {operacao}: R$ {valor:.2f}")
+        print(f"{operacao}: R$ {valor:.2f}")
 
 
 def main():
@@ -168,5 +177,4 @@ def main():
             print("Opção inválida.")
 
 
-    if __name__ == "__main__":
-        main()
+main()
