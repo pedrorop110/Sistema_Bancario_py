@@ -3,8 +3,21 @@ from banco import consultar_historico as consultar_historicodb
 from banco import criar_conta as criar_contadb
 from banco import depositar as depositardb
 from banco import sacar as sacardb
+from banco import buscar_conta as BuscarContadb
 
+class conta:
+    def __init__(self, nome, idade, cpf, saldo):
+        self.nome = nome
+        self.idade = idade
+        self.cpf = cpf
+        self.saldo = saldo
 
+    def Salvar(self):
+        criar_contadb(self.cpf, self.nome, self.idade, self.saldo)
+
+    def Depositar(self):
+        depositardb(self.cpf ,self.saldo)
+        
 def ler_valor_positivo(mensagem):
     while True:
         try:
@@ -19,7 +32,6 @@ def ler_valor_positivo(mensagem):
 
         return valor
 
-
 def criar_conta():
     cpf = input("CPF: ")
     nome = input("Nome: ")
@@ -31,31 +43,35 @@ def criar_conta():
         print("Idade e saldo precisam ser números válidos.")
         return
 
+    NovaConta = conta(nome, idade, cpf, saldo)
+
     try:
-        criar_contadb(cpf, nome, idade, saldo)
+        NovaConta.Salvar()
     except Exception as erro:
         print(f"Não foi possível criar a conta: {erro}")
         return
 
-    print(f"Conta criada para {nome}.")
+    print(f"Conta criada para {NovaConta.nome}.")
 
 
 def depositar():
     cpf = input("Digite seu CPF: ")
 
-    conta = consultar_saldodb(cpf)
-    if conta is None:
+    dados = BuscarContadb(cpf)
+    if dados is None:
         print("Conta não encontrada.")
         return
 
-    valor = ler_valor_positivo("Digite uma quantia para depositar: R$ ")
-    linhas_atualizadas = depositardb(cpf, valor)
+    MinhaConta = conta(nome=dados[0], idade=dados[1], cpf=dados[2], saldo=dados[3])
 
-    if linhas_atualizadas == 0:
-        print("Não foi possível concluir o depósito.")
+    # Parte do depósito
+    valor = ler_valor_positivo("Digite uma quantia para depositar: R$ ")
+
+    if not MinhaConta.Depositar(valor):
+        print("Não foi possivel concluir o depósito.")
         return
 
-    print(f"R$ {valor:.2f} depositados com sucesso para {conta[0]}.")
+    print(f"R$ {valor:.2f} depositados com sucesso para {MinhaConta.nome}.")
 
 
 def sacar():
