@@ -1,0 +1,83 @@
+🏦 Sistema Bancário em Python
+
+Um sistema bancário simples feito no terminal, usando Python e SQLite. Os dados ficam salvos em um banco de dados, então nada se perde quando o programa fecha.
+
+Projeto feito por mim para praticar programação, banco de dados e Programação Orientada a Objetos (POO).
+
+✨ Funcionalidades
+    Criar conta com CPF, nome, idade e saldo inicial
+    Depositar dinheiro em uma conta
+    Sacar dinheiro (só se tiver saldo suficiente)
+    Consultar saldo
+    Ver histórico de movimentações (saldo inicial, depósitos e saques)
+
+🛠️ Tecnologias usadas
+Python 3
+SQLite (módulo sqlite3, que já vem com o Python)
+📁 Estrutura do projeto
+├── main.py     # Menu, classe Conta e interação com o usuário
+├── banco.py    # Conexão com o banco e funções SQL
+└── banco.db    # Banco de dados (criado automaticamente)
+main.py: mostra o menu, lê o que o usuário digita e usa a classe conta.
+banco.py: cuida de tudo que fala com o banco de dados (criar tabelas, inserir, atualizar e consultar).
+🗃️ Banco de dados
+
+O programa cria duas tabelas sozinho:
+
+sistema_bancario
+
+Campo	Tipo	Observação
+id	INTEGER	Chave primária
+nome	TEXT	Obrigatório
+idade	INTEGER	Obrigatório
+cpf	TEXT	Obrigatório e único
+saldo	REAL	Obrigatório
+
+historico
+
+Campo	Tipo	Observação
+id	INTEGER	Chave primária
+cpf	TEXT	CPF da conta
+operacao	TEXT	Saldo inicial, Depósito ou Saque
+valor	REAL	Valor da operação
+▶️ Como rodar
+Instale o Python 3
+Clone este repositório:
+bash
+   git clone https://github.com/pedrorop110/NOME-DO-REPOSITORIO.git
+Entre na pasta do projeto:
+bash
+   cd NOME-DO-REPOSITORIO
+Execute o programa:
+bash
+   python main.py
+🖥️ Como fica o menu
+===== BANCO =====
+1 - Criar conta
+2 - Depositar
+3 - Sacar
+4 - Consultar saldo
+5 - Ver histórico
+6 - Sair
+🔒 Cuidados que tomei no código
+Uso de ? nas consultas SQL, para evitar SQL Injection
+Uso de commit e rollback, para não salvar operações pela metade
+O saque só acontece se o saldo for suficiente
+Não aceita valores negativos ou zero em depósitos e saques
+Não deixa criar duas contas com o mesmo CPF
+Tratamento de erros quando o usuário digita algo inválido
+📚 O que aprendi
+Como conectar Python com um banco de dados SQLite
+Como criar tabelas e fazer INSERT, UPDATE e SELECT
+Como usar classes e métodos (POO)
+Como separar o código em arquivos (main.py e banco.py)
+Como tratar erros com try/except
+🚀 Ideias para o futuro
+Adicionar data e hora nas movimentações
+Validar se o CPF é real
+Criar transferência entre contas
+Adicionar senha para cada conta
+Criar uma interface gráfica
+👨‍💻 Autor
+
+Pedro Lucas GitHub: @pedrorop110
