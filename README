@@ -12,34 +12,34 @@ Projeto feito por mim para praticar programação, banco de dados e Programaçã
     Ver histórico de movimentações (saldo inicial, depósitos e saques)
 
 🛠️ Tecnologias usadas
-Python 3
-SQLite (módulo sqlite3, que já vem com o Python)
+        Python 3
+        SQLite (módulo sqlite3, que já vem com o Python)
+
 📁 Estrutura do projeto
 ├── main.py     # Menu, classe Conta e interação com o usuário
 ├── banco.py    # Conexão com o banco e funções SQL
 └── banco.db    # Banco de dados (criado automaticamente)
 main.py: mostra o menu, lê o que o usuário digita e usa a classe conta.
 banco.py: cuida de tudo que fala com o banco de dados (criar tabelas, inserir, atualizar e consultar).
-🗃️ Banco de dados
 
-O programa cria duas tabelas sozinho:
+🗃️ Banco de dados
+    O programa cria duas tabelas sozinho:
 
 sistema_bancario
-
-Campo	Tipo	Observação
-id	INTEGER	Chave primária
-nome	TEXT	Obrigatório
-idade	INTEGER	Obrigatório
-cpf	TEXT	Obrigatório e único
-saldo	REAL	Obrigatório
+        Campo	Tipo	Observação
+        id	INTEGER	Chave primária
+        nome	TEXT	Obrigatório
+        idade	INTEGER	Obrigatório
+        cpf	TEXT	Obrigatório e único
+        saldo	REAL	Obrigatório
 
 historico
+    Campo	Tipo	Observação
+    id	INTEGER	Chave primária
+    cpf	TEXT	CPF da conta
+    operacao	TEXT	Saldo inicial, Depósito ou Saque
+    valor	REAL	Valor da operação
 
-Campo	Tipo	Observação
-id	INTEGER	Chave primária
-cpf	TEXT	CPF da conta
-operacao	TEXT	Saldo inicial, Depósito ou Saque
-valor	REAL	Valor da operação
 ▶️ Como rodar
 Instale o Python 3
 Clone este repositório:
